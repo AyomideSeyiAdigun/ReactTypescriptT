@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { SearchCountries } from '../../stateManagement/actions'
 import './searchInput.css'
-import { State } from "../../types/types"
+ 
 interface Props {
   SearchData: (data: any) => void,
 

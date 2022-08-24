@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import ReactPaginate from 'react-paginate';
 import { useSelector } from 'react-redux';
 import {State} from "../../types/types"
-
+import SearchInput from '../../components/searchInput/SearchInput'
 interface SingleCountry{
   flags:{
     png:string
@@ -78,12 +78,12 @@ const PaginatedItems:React.FC<Props> = ({ itemsPerPage }) =>{
         }else{
           counttry = countries?.filter((con:SingleCountry)  => con.region.includes(search.value) )
         }
-       setCurrentItems(counttry?.slice(itemOffset, endOffset))!;
+       setCurrentItems(Array.isArray(counttry) ? counttry.slice(itemOffset, endOffset):counttry);
         setPageCount(Math.ceil(counttry?.length / itemsPerPage));
 
       }else{
-        console.log(countries)
-        setCurrentItems(countries.slice(itemOffset, endOffset));
+
+        setCurrentItems(Array.isArray(countries) ? countries.slice(itemOffset, endOffset):countries);
         setPageCount(Math.ceil(countries?.length / itemsPerPage));
       }
       
@@ -97,6 +97,7 @@ const PaginatedItems:React.FC<Props> = ({ itemsPerPage }) =>{
   
     return (
       <>
+        <SearchInput />
         <DataTable currentItems={currentItems} />
         <ReactPaginate
           breakLabel="..."

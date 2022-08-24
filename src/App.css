@@ -16,8 +16,13 @@ code{
   font-size: large;
   font-weight: bold;
   padding: 20px;
-  height: max-content;
+  height: 100vh;
   transition: all .5s;
+ scroll-behavior: auto;
+}
+Link{
+  color: var(--text-primary);
+  background-color: var(--background);
 }
 .card{
   background-color:var(--background); 

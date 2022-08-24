@@ -1,6 +1,9 @@
 .cardImage{
     height: 150px;    
 }
+.row{
+scroll-behavior: auto;
+}
 /* ReactPaginate{
     display: inline-block;
 } */

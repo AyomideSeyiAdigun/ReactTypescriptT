@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import './countryPage.css'
-import {  useParams} from 'react-router-dom'
+import {  useNavigate, useParams} from 'react-router-dom'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import {State} from "../../types/types"
@@ -34,11 +34,11 @@ const CountryPage:React.FC =()=> {
     const {name} = useParams()
     const countries:any = useSelector((state:State) => state.country.CountriesData) ;
      const [singleCountry , setSingleCountry] = useState <Country[]>([])
-
+     let navigate = useNavigate();
      
     useEffect(()=>{
         async  function  getCountryDetail( ) {
-            let Country :[] = await countries.filter((country:Country)=>country.name.common === name);
+            let Country :[] = await Array.isArray(countries)? countries.filter((country:Country)=>country.name.common === name):countries;
             setSingleCountry(Country)
          }
          getCountryDetail()
@@ -46,10 +46,12 @@ const CountryPage:React.FC =()=> {
     
     return (
     <>
+    {  singleCountry[0]?.flags.svg ?<>
      
-    <div className="row justify-content-around">
+    <div className="row justify-content-around mt-5">
+        
         <div className="col-sm-6 col-md-6 col-lg-6">
-            
+        
         <img src={singleCountry[0]?.flags.svg} className="img-thumbnail" alt="..."/>   
         </div>
         <div className="col-sm-6 col-md-6 col-lg-6">
@@ -61,7 +63,7 @@ const CountryPage:React.FC =()=> {
         <span><strong>Sub Region : </strong>{singleCountry[0]?.subregion} </span><br />
         <span><strong>Region: </strong>{singleCountry[0]?.region}</span>
         </div>
-    </div>
+    </div></>:navigate("/", { replace: true })}
     </>
     )   
 }
